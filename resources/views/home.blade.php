@@ -48,7 +48,9 @@
                                     <div class="post-meta mb-3">
                                         <small>
                                             <i class="fas fa-user me-1"></i>{{ $post->user->name }}
-                                            <i class="fas fa-calendar ms-3 me-1"></i>{{ $post->published_at->format('M d, Y') }}
+                                            @if($post->published_at)
+                                                <i class="fas fa-calendar ms-3 me-1"></i>{{ $post->published_at->format('M d, Y') }}
+                                            @endif
                                             <i class="fas fa-tag ms-3 me-1"></i>{{ $post->category->name }}
                                         </small>
                                     </div>
