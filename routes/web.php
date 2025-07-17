@@ -11,6 +11,14 @@ Route::get('/category/{category}', [CategoryController::class, 'show'])->name('c
 
 Auth::routes();
 
+// Redirect /home to dashboard for authenticated users, or to home for guests
+Route::get('/home', function () {
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('home');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::resource('posts', PostController::class)->except(['show']);
