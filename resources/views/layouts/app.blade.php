@@ -9,29 +9,39 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            --light-gradient: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            --hover-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            --primary-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            --secondary-gradient: linear-gradient(135deg, #6c7b7f 0%, #8e9eab 100%);
+            --success-gradient: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            --warning-gradient: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            --danger-gradient: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            --light-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            --card-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            --hover-shadow: 0 10px 25px rgba(0,0,0,0.12);
         }
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: #f8f9fa;
             color: #2c3e50;
             line-height: 1.6;
             min-height: 100vh;
         }
         
         .navbar {
-            background: var(--primary-gradient);
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             border: none;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1030;
+        }
+        
+        .dropdown-menu {
+            z-index: 1040;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 15px;
+            padding: 10px;
         }
         
         .navbar-brand {
@@ -72,81 +82,201 @@
             background: var(--primary-gradient);
             border: none;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3);
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            border-radius: 8px;
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 8px 25px rgba(44, 62, 80, 0.4);
             background: var(--primary-gradient);
             border: none;
         }
         
-        .btn-primary:hover {
-            background-color: var(--medium-gray);
-            border-color: var(--medium-gray);
-        }
-        
         .btn-outline-primary {
-            color: var(--dark-gray);
-            border-color: var(--dark-gray);
+            border: 2px solid #2c3e50;
+            background: white;
+            color: #2c3e50;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 8px;
         }
         
         .btn-outline-primary:hover {
-            background-color: var(--dark-gray);
-            border-color: var(--dark-gray);
+            background: #2c3e50;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(44, 62, 80, 0.3);
+        }
+        
+        .btn-success {
+            background: var(--success-gradient);
+            border: none;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .btn-warning {
+            background: var(--warning-gradient);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+        }
+        
+        .btn-danger {
+            background: var(--danger-gradient);
+            border: none;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
         }
         
         .card {
-            border: 1px solid var(--light-gray);
+            border: none;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            background: white;
+            overflow: hidden;
         }
         
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+            box-shadow: var(--hover-shadow);
         }
         
         .card-header {
-            background-color: var(--primary-white);
-            border-bottom: 1px solid var(--light-gray);
+            background: var(--light-gradient);
+            border: none;
+            padding: 1.5rem;
             font-weight: 600;
+            color: #2c3e50;
         }
         
         .form-control {
-            border: 1px solid var(--light-gray);
+            border: 2px solid #e9ecef;
             border-radius: 8px;
-            transition: border-color 0.3s ease;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+            background: white;
+            font-size: 14px;
         }
         
         .form-control:focus {
-            border-color: var(--dark-gray);
-            box-shadow: 0 0 0 0.2rem rgba(43, 43, 43, 0.25);
+            border-color: #2c3e50;
+            box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.15);
+            transform: translateY(-1px);
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        /* Custom File Upload Styles */
+        .custom-file-upload {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .custom-file-upload input[type=file] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .file-upload-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border: 2px dashed #6c757d;
+            border-radius: 8px;
+            background: #f8f9fa;
+            color: #6c757d;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-height: 120px;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .file-upload-btn:hover {
+            border-color: #2c3e50;
+            background: #e9ecef;
+            color: #2c3e50;
+            transform: scale(1.01);
+        }
+        
+        .file-upload-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .file-upload-text {
+            text-align: center;
         }
         
         .badge {
             border-radius: 20px;
             padding: 0.5rem 1rem;
-            font-weight: 500;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.75rem;
+        }
+        
+        .badge.bg-success {
+            background: var(--success-gradient) !important;
+        }
+        
+        .badge.bg-warning {
+            background: var(--warning-gradient) !important;
+            color: #2c3e50 !important;
+        }
+        
+        .badge.bg-danger {
+            background: var(--secondary-gradient) !important;
         }
         
         .badge-primary {
-            background-color: var(--dark-gray);
+            background: var(--primary-gradient) !important;
         }
         
         .badge-secondary {
-            background-color: var(--medium-gray);
+            background: var(--dark-gradient) !important;
         }
         
         .hero-section {
-            background: linear-gradient(135deg, var(--primary-white) 0%, #f8f9fa 100%);
-            padding: 4rem 0;
-            border-bottom: 1px solid var(--light-gray);
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 6rem 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.05"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.05"/><circle cx="50" cy="10" r="1" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.5;
+        }
+        
+        .hero-section .display-4 {
+            font-weight: 800;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .hero-section .lead {
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         
         .post-card {
@@ -166,15 +296,16 @@
         }
         
         .post-meta {
-            color: var(--medium-gray);
+            color: #6c757d;
             font-size: 0.9rem;
         }
         
         .sidebar {
-            background-color: #f8f9fa;
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 1px solid var(--light-gray);
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            border: none;
         }
         
         html, body {
@@ -191,10 +322,21 @@
         }
         
         .footer {
-            background-color: var(--dark-gray);
-            color: var(--primary-white);
+            background: var(--primary-gradient);
+            color: white;
             padding: 3rem 0 1rem;
             margin-top: auto;
+            position: relative;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #6c757d 0%, #2c3e50 50%, #6c757d 100%);
         }
         
         .alert {

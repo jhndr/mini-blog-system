@@ -16,29 +16,29 @@
     <!-- Stats Cards -->
     <div class="row mb-4">
         <div class="col-md-4">
-            <div class="card">
-                <div class="card-body text-center">
-                    <i class="fas fa-file-alt fa-3x text-primary mb-3"></i>
-                    <h3>{{ $totalPosts }}</h3>
-                    <p class="text-muted">Total Posts</p>
+            <div class="card" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; border: none;">
+                <div class="card-body text-center" style="padding: 2rem;">
+                    <i class="fas fa-file-alt fa-3x mb-3" style="opacity: 0.9;"></i>
+                    <h2 style="font-weight: 700; font-size: 2.5rem; margin: 0;">{{ $totalPosts }}</h2>
+                    <p class="mb-0" style="font-weight: 500; opacity: 0.9;">Total Posts</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card">
-                <div class="card-body text-center">
-                    <i class="fas fa-eye fa-3x text-success mb-3"></i>
-                    <h3>{{ $publishedPosts }}</h3>
-                    <p class="text-muted">Published</p>
+            <div class="card" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%); color: white; border: none;">
+                <div class="card-body text-center" style="padding: 2rem;">
+                    <i class="fas fa-eye fa-3x mb-3" style="opacity: 0.9;"></i>
+                    <h2 style="font-weight: 700; font-size: 2.5rem; margin: 0;">{{ $publishedPosts }}</h2>
+                    <p class="mb-0" style="font-weight: 500; opacity: 0.9;">Published</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card">
-                <div class="card-body text-center">
-                    <i class="fas fa-edit fa-3x text-warning mb-3"></i>
-                    <h3>{{ $draftPosts }}</h3>
-                    <p class="text-muted">Drafts</p>
+            <div class="card" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); color: white; border: none;">
+                <div class="card-body text-center" style="padding: 2rem;">
+                    <i class="fas fa-edit fa-3x mb-3" style="opacity: 0.9;"></i>
+                    <h2 style="font-weight: 700; font-size: 2.5rem; margin: 0;">{{ $draftPosts }}</h2>
+                    <p class="mb-0" style="font-weight: 500; opacity: 0.9;">Drafts</p>
                 </div>
             </div>
         </div>

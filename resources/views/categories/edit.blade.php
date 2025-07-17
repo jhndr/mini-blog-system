@@ -4,9 +4,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 mx-auto">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0">Edit Category</h5>
+            <div class="card" style="background: white; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.08);">
+                <div class="card-header text-center" style="background: linear-gradient(135deg, #6c7b7f 0%, #8e9eab 100%); color: white; border-radius: 12px 12px 0 0;">
+                    <h4 class="mb-0" style="font-weight: 600;">
+                        <i class="fas fa-edit me-2"></i>Edit Category
+                    </h4>
+                    <p class="mb-0 mt-2" style="opacity: 0.9; font-size: 14px;">Update category details</p>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('categories.update', $category) }}">
@@ -33,9 +36,15 @@
                             <div class="form-text">Maximum 1000 characters</div>
                         </div>
 
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="{{ route('categories.index') }}" class="btn btn-secondary me-md-2">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Update Category</button>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a href="{{ route('categories.index') }}" class="btn btn-outline-secondary btn-lg me-md-2" 
+                               style="border-radius: 8px; font-weight: 600; padding: 12px 30px;">
+                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg" 
+                                    style="border-radius: 8px; font-weight: 600; padding: 12px 30px; min-width: 180px;">
+                                <i class="fas fa-save me-2"></i>Update Category
+                            </button>
                         </div>
                     </form>
                 </div>
