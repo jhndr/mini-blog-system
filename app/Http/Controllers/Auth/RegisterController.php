@@ -31,6 +31,17 @@ class RegisterController extends Controller
     protected $redirectTo = '/dashboard';
 
     /**
+     * Get the post-registration redirect path.
+     *
+     * @return string
+     */
+    public function redirectTo()
+    {
+        // New users are always regular users, not admins
+        return '/dashboard';
+    }
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -63,10 +74,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        
+        // Assign user role to new registrations
+        $user->assignRole('user');
+        
+        return $user;
     }
 }

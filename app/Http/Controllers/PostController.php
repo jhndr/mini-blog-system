@@ -62,6 +62,13 @@ class PostController extends Controller
         $post->user_id = auth()->id();
         $post->is_published = $request->has('is_published');
         
+        // Set default status based on user role
+        if (auth()->user()->hasRole('admin')) {
+            $post->status = Post::STATUS_APPROVED; // Admins can auto-approve
+        } else {
+            $post->status = Post::STATUS_PENDING; // Regular users need approval
+        }
+        
         if ($post->is_published) {
             $post->published_at = now();
         }

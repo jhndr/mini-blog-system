@@ -20,12 +20,40 @@ class Post extends Model
         'published_at',
         'user_id',
         'category_id',
+        'status',
     ];
 
     protected $casts = [
         'is_published' => 'boolean',
         'published_at' => 'datetime',
     ];
+
+    // Status constants
+    const STATUS_PENDING = 'pending';
+    const STATUS_APPROVED = 'approved';
+    const STATUS_DECLINED = 'declined';
+
+    // Scopes for different post statuses
+    public function scopePending($query)
+    {
+        return $query->where('status', self::STATUS_PENDING);
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->where('status', self::STATUS_APPROVED);
+    }
+
+    public function scopeDeclined($query)
+    {
+        return $query->where('status', self::STATUS_DECLINED);
+    }
+
+    public function scopePublic($query)
+    {
+        return $query->where('status', self::STATUS_APPROVED)
+                    ->where('is_published', true);
+    }
 
     public function user()
     {

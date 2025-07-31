@@ -16,11 +16,14 @@ class HomeController extends Controller
     public function index()
     {
         $posts = Post::with(['user', 'category'])
-            ->where('is_published', true)
+            ->public() // Only show approved and published posts
             ->orderBy('published_at', 'desc')
             ->paginate(6);
             
-        $categories = Category::withCount('posts')->get();
+        $categories = Category::withCount(['posts' => function($query) {
+            $query->where('status', Post::STATUS_APPROVED)
+                  ->where('is_published', true);
+        }])->get();
         
         return view('home', compact('posts', 'categories'));
     }
@@ -34,6 +37,15 @@ class HomeController extends Controller
     {
         $user = auth()->user();
         $totalPosts = Post::where('user_id', $user->id)->count();
+        $approvedPosts = Post::where('user_id', $user->id)
+            ->where('status', Post::STATUS_APPROVED)
+            ->count();
+        $pendingPosts = Post::where('user_id', $user->id)
+            ->where('status', Post::STATUS_PENDING)
+            ->count();
+        $declinedPosts = Post::where('user_id', $user->id)
+            ->where('status', Post::STATUS_DECLINED)
+            ->count();
         $publishedPosts = Post::where('user_id', $user->id)
             ->where('is_published', true)
             ->count();
@@ -48,6 +60,15 @@ class HomeController extends Controller
             
         $categories = Category::all();
             
-        return view('dashboard', compact('totalPosts', 'publishedPosts', 'draftPosts', 'posts', 'categories'));
+        return view('dashboard', compact(
+            'totalPosts', 
+            'approvedPosts', 
+            'pendingPosts', 
+            'declinedPosts', 
+            'publishedPosts', 
+            'draftPosts', 
+            'posts', 
+            'categories'
+        ));
     }
 }

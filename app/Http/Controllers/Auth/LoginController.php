@@ -28,6 +28,20 @@ class LoginController extends Controller
     protected $redirectTo = '/dashboard';
 
     /**
+     * Get the post-login redirect path.
+     *
+     * @return string
+     */
+    public function redirectTo()
+    {
+        if (auth()->user()->hasRole('admin')) {
+            return '/admin/dashboard';
+        }
+        
+        return '/dashboard';
+    }
+
+    /**
      * Create a new controller instance.
      *
      * @return void
