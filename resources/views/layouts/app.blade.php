@@ -383,16 +383,32 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">Home</a>
-                    </li>
+                    @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}">Home</a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('welcome') }}">View Website</a>
+                        </li>
+                    @endguest
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                            @if(auth()->user()->hasRole('admin'))
+                                <a class="nav-link" href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+                            @else
+                                <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                            @endif
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('posts.index') }}">My Posts</a>
-                        </li>
+                        @if(auth()->user()->hasRole('admin'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.posts.index') }}">Post Moderation</a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('posts.index') }}">My Posts</a>
+                            </li>
+                        @endif
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('categories.index') }}">Categories</a>
                         </li>

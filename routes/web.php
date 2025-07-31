@@ -7,7 +7,17 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\PostModerationController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    if (auth()->check()) {
+        if (auth()->user()->hasRole('admin')) {
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect()->route('dashboard');
+    }
+    return app(App\Http\Controllers\HomeController::class)->index();
+})->name('home');
+
+Route::get('/welcome', [HomeController::class, 'index'])->name('welcome');
 Route::get('/post/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::get('/category/{category}', [CategoryController::class, 'show'])->name('categories.show');
 
