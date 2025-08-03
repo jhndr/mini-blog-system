@@ -92,7 +92,7 @@
              class="fixed inset-0 bg-gray-600 bg-opacity-75 lg:hidden z-20"></div>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col overflow-hidden lg:ml-64">
+        <div class="flex-1 flex flex-col overflow-hidden">
             <!-- Top Header -->
             <header class="bg-white shadow-sm border-b border-gray-200">
                 <div class="flex items-center justify-between px-6 py-4">
