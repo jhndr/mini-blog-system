@@ -16,12 +16,15 @@
     
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="bg-gray-50 font-sans antialiased" x-data="{ sidebarOpen: false }">
     <div class="min-h-screen flex">
         <!-- Sidebar -->
-        <div class="bg-gray-900 text-white w-64 min-h-screen p-4 fixed lg:relative lg:translate-x-0 transform transition-transform duration-200 ease-in-out z-30"
-             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'">
+        <div class="bg-gray-900 text-white w-64 min-h-screen p-4 fixed lg:static lg:translate-x-0 transform transition-transform duration-200 ease-in-out z-30"
+             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'">>
             
             <!-- Logo -->
             <div class="flex items-center mb-8">
@@ -89,75 +92,38 @@
              class="fixed inset-0 bg-gray-600 bg-opacity-75 lg:hidden z-20"></div>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col overflow-hidden lg:ml-0">
+        <div class="flex-1 flex flex-col overflow-hidden lg:ml-64">
             <!-- Top Header -->
             <header class="bg-white shadow-sm border-b border-gray-200">
-                <div class="flex items-center justify-between px-4 py-4">
+                <div class="flex items-center justify-between px-6 py-4">
                     <div class="flex items-center">
                         <button @click="sidebarOpen = !sidebarOpen" 
-                                class="text-gray-500 hover:text-gray-600 lg:hidden">
+                                class="text-gray-500 hover:text-gray-600 lg:hidden mr-4">
                             <i class="fas fa-bars text-xl"></i>
                         </button>
-                        <h1 class="ml-4 lg:ml-0 text-2xl font-semibold text-gray-900">
-                            @yield('page-title', 'Admin Dashboard')
-                        </h1>
+                        <h1 class="text-xl font-semibold text-gray-900">@yield('page-title', 'Dashboard')</h1>
                     </div>
-                    
                     <div class="flex items-center space-x-4">
-                        <!-- Notifications -->
-                        <div x-data="{ open: false }" class="relative">
-                            <button @click="open = !open" 
-                                    class="text-gray-500 hover:text-gray-700 relative">
-                                <i class="fas fa-bell text-xl"></i>
-                                @if($pending_posts ?? 0 > 0)
-                                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                                        {{ $pending_posts ?? 0 }}
-                                    </span>
-                                @endif
-                            </button>
-                            
-                            <div x-show="open" 
-                                 @click.away="open = false"
-                                 x-transition:enter="transition ease-out duration-200"
-                                 x-transition:enter-start="opacity-0 scale-95"
-                                 x-transition:enter-end="opacity-100 scale-100"
-                                 x-transition:leave="transition ease-in duration-75"
-                                 x-transition:leave-start="opacity-100 scale-100"
-                                 x-transition:leave-end="opacity-0 scale-95"
-                                 class="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg z-50">
-                                <div class="p-4">
-                                    <h3 class="text-lg font-medium">Notifications</h3>
-                                    @if($pending_posts ?? 0 > 0)
-                                        <p class="text-sm text-gray-600 mt-2">
-                                            You have {{ $pending_posts }} posts waiting for moderation.
-                                        </p>
-                                    @else
-                                        <p class="text-sm text-gray-600 mt-2">No new notifications.</p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
+                        <span class="text-sm text-gray-600">{{ Auth::user()->name }}</span>
                     </div>
                 </div>
             </header>
 
             <!-- Page Content -->
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
-                <div class="container mx-auto px-6 py-8">
-                    @if (session('success'))
-                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+            <main class="flex-1 bg-gray-50" style="padding: 1.5rem; margin: 0; overflow-y: auto;">
+                @if (session('success'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
-                    @if (session('error'))
-                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                            {{ session('error') }}
-                        </div>
-                    @endif
+                @if (session('error'))
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                        {{ session('error') }}
+                    </div>
+                @endif
 
-                    @yield('content')
-                </div>
+                @yield('content')
             </main>
         </div>
     </div>

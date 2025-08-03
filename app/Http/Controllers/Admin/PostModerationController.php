@@ -10,7 +10,7 @@ class PostModerationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'permission:moderate posts']);
+        $this->middleware(['auth', 'role:admin']);
     }
 
     public function index(Request $request)
@@ -36,8 +36,9 @@ class PostModerationController extends Controller
         return view('admin.posts.moderation', compact('posts', 'status'));
     }
 
-    public function approve(Post $post)
+    public function approve($id)
     {
+        $post = Post::findOrFail($id);
         $post->update(['status' => Post::STATUS_APPROVED]);
         
         return response()->json([
@@ -46,8 +47,9 @@ class PostModerationController extends Controller
         ]);
     }
 
-    public function decline(Post $post)
+    public function decline($id)
     {
+        $post = Post::findOrFail($id);
         $post->update(['status' => Post::STATUS_DECLINED]);
         
         return response()->json([

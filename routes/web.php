@@ -45,9 +45,9 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     
-    // Post moderation routes
+    // Post moderation routes - using ID binding
     Route::get('/posts', [PostModerationController::class, 'index'])->name('posts.index');
-    Route::patch('/posts/{post}/approve', [PostModerationController::class, 'approve'])->name('posts.approve');
-    Route::patch('/posts/{post}/decline', [PostModerationController::class, 'decline'])->name('posts.decline');
+    Route::patch('/posts/{id}/approve', [PostModerationController::class, 'approve'])->name('posts.approve');
+    Route::patch('/posts/{id}/decline', [PostModerationController::class, 'decline'])->name('posts.decline');
     Route::post('/posts/bulk-action', [PostModerationController::class, 'bulkAction'])->name('posts.bulk-action');
 });

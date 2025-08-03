@@ -3,19 +3,21 @@
 @section('page-title', 'Dashboard')
 
 @section('content')
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    <!-- Stats Cards -->
-    <div class="bg-white rounded-lg shadow p-6">
-        <div class="flex items-center">
-            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-                <i class="fas fa-file-alt text-2xl"></i>
-            </div>
-            <div class="ml-4">
-                <h3 class="text-lg font-semibold text-gray-900">{{ $stats['total_posts'] }}</h3>
-                <p class="text-gray-600">Total Posts</p>
+<!-- Dashboard Statistics -->
+<div class="mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Stats Cards -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                    <i class="fas fa-file-alt text-2xl"></i>
+                </div>
+                <div class="ml-4">
+                    <h3 class="text-lg font-semibold text-gray-900">{{ $stats['total_posts'] }}</h3>
+                    <p class="text-gray-600">Total Posts</p>
+                </div>
             </div>
         </div>
-    </div>
 
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center">
@@ -54,6 +56,7 @@
     </div>
 </div>
 
+<!-- Dashboard Content -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
     <!-- Pending Posts -->
     <div class="bg-white rounded-lg shadow">
@@ -73,7 +76,12 @@
                                 </p>
                             </div>
                             <div class="flex space-x-2">
-                                <button @click="approvePost({{ $post->id }})"
+                                <a href="{{ route('posts.show', $post->slug) }}" 
+                                   class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm transition-colors inline-flex items-center">
+                                    <i class="fas fa-eye mr-1"></i>
+                                    View
+                                </a>
+                                <button onclick="approvePost({{ $post->id }})"
                                         class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm transition-colors">
                                     <i class="fas fa-check mr-1"></i>
                                     Approve
@@ -180,34 +188,70 @@
 @push('scripts')
 <script>
     function approvePost(postId) {
+        console.log('Approving post:', postId);
+        
         fetch(`/admin/posts/${postId}/approve`, {
             method: 'PATCH',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 'Content-Type': 'application/json',
+                'Accept': 'application/json'
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
+        .then(response => {
+            console.log('Response status:', response.status);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            if (data.success) {
+                // Show success message
+                alert(data.message || 'Post approved successfully!');
+                location.reload();
+            } else {
+                alert('Failed to approve post: ' + (data.message || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error approving post: ' + error.message);
         });
     }
 
     function declinePost(postId) {
+        console.log('Declining post:', postId);
+        
         fetch(`/admin/posts/${postId}/decline`, {
             method: 'PATCH',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 'Content-Type': 'application/json',
+                'Accept': 'application/json'
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
+        .then(response => {
+            console.log('Response status:', response.status);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            if (data.success) {
+                // Show success message
+                alert(data.message || 'Post declined successfully!');
+                location.reload();
+            } else {
+                alert('Failed to decline post: ' + (data.message || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error declining post: ' + error.message);
         });
     }
 </script>
